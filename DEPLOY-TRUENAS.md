@@ -24,9 +24,9 @@ The database and uploaded pictures live here, so this is what you back up.
 
 Like your other apps, the NAS pulls a ready-made image. GitHub builds it for you using the included workflow, [`.github/workflows/docker.yml`](.github/workflows/docker.yml).
 
-1. **Create a GitHub repository** named `tavern` and push this project to it (`main` branch). The workflow starts by itself.
+1. **Create a GitHub repository** named `tavern` and push this project to it (`main` branch). The workflow starts by itself. (This is already done for `ramblepaw/tavern`.)
 2. Watch the **Actions** tab. The first run takes a few minutes and ends green.
-3. **Make the image public**, so the NAS can pull it without signing in: on your GitHub profile open **Packages → tavern → Package settings → Change visibility → Public**. (The image only contains the app's code, never your chats or settings. Those live in the dataset.)
+3. **Check the image is public.** A package published from a public repo is public already. You can confirm under your profile's **Packages → tavern**, where the sidebar shows its visibility. (The image only contains the app's code, never your chats or settings. Those live in the dataset.)
 
 Your image is now at `ghcr.io/<your-github-username>/tavern:latest`.
 
@@ -159,6 +159,7 @@ Add a **periodic snapshot task** (Data Protection → Periodic Snapshot Tasks) f
 | "Notifications" says it needs HTTPS or the Home Screen | Open the HTTPS address, not the LAN one. On iPhone, launch from the Home Screen icon. |
 
 View logs under **Apps → tavern → Workloads → Logs**.
+
 
 
 
