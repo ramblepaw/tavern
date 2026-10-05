@@ -1,0 +1,14 @@
+# Tavern on TrueNAS (Apps -> Discover Apps -> Custom App -> "Install via YAML").
+# See DEPLOY-TRUENAS.md for the full walkthrough. Lines marked CHANGE need your own values.
+services:
+  tavern:
+    image: ghcr.io/ramblepaw/tavern:latest   # built by GitHub Actions (see DEPLOY-TRUENAS.md). CHANGE if your repo is named differently
+    restart: unless-stopped
+    user: "568:568"                 # TrueNAS "apps" user; the data dataset must be owned by it
+    ports:
+      - "30300:3000"                # CHANGE the left number if 30300 is taken. Your Nginx proxies to this; never port-forward it
+    environment:
+      TRUST_PROXY: "1"              # one proxy (Nginx) in front. Use "2" if Cloudflare's orange-cloud proxy is also in front of Nginx
+      VAPID_SUBJECT: "mailto:you@example.com"   # CHANGE: your real email, needed for push notifications
+    volumes:
+      - /mnt/tank/apps/tavern:/data # CHANGE "tank" to your pool name. Must be a local dataset, not an SMB/NFS share

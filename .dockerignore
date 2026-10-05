@@ -1,0 +1,9 @@
+node_modules
+data
+.git
+.gitignore
+*.log
+README.md
+DEPLOY-TRUENAS.md
+docker-compose.yml
+start.bat
