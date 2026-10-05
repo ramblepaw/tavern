@@ -136,10 +136,13 @@ Traffic then passes two proxies (Cloudflare, then your Nginx). In the app YAML c
 ## Updating Tavern
 
 1. Push your changes to GitHub and wait for the **Actions** run to finish.
-2. On the NAS, open **System → Shell** and pull the new image: `sudo docker pull ghcr.io/ramblepaw/tavern:latest`
-3. In **Apps**, open `tavern`, then **Stop** and **Start** it.
+2. In **Apps**, open `tavern`, then **Stop** and **Start** it. The YAML has `pull_policy: always`, so it fetches the newest image from GitHub on start.
 
-TrueNAS won't re-pull a `latest` image on its own, which is why step 2 is needed. Your data is on the dataset, so updates never touch it.
+Your data is on the dataset, so updates never touch it.
+
+If the app still comes back on the old version (check the image's created date under the app's details), TrueNAS isn't applying `pull_policy`. Pull manually in **System → Shell** with `sudo docker pull ghcr.io/ramblepaw/tavern:latest`, then stop and start the app again.
+
+Because of `pull_policy: always`, a start while GitHub is unreachable fails. If that ever happens, delete that one line from the YAML, save, and the app starts with the image it already has.
 ## Backups
 
 Add a **periodic snapshot task** (Data Protection → Periodic Snapshot Tasks) for `tank/apps/tavern`, and replicate it somewhere else if you can. The dataset holds the chat database, all pictures, and `vapid.json`. Losing `vapid.json` means everyone has to turn notifications back on.
@@ -159,6 +162,7 @@ Add a **periodic snapshot task** (Data Protection → Periodic Snapshot Tasks) f
 | "Notifications" says it needs HTTPS or the Home Screen | Open the HTTPS address, not the LAN one. On iPhone, launch from the Home Screen icon. |
 
 View logs under **Apps → tavern → Workloads → Logs**.
+
 
 
 
